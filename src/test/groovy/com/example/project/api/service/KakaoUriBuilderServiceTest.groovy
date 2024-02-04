@@ -2,7 +2,6 @@ package com.example.project.api.service
 
 import spock.lang.Specification
 
-import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 
 class KakaoUriBuilderServiceTest extends Specification {
