@@ -4,11 +4,13 @@ import com.example.project.AbstractIntegrationContainerBaseTest
 import com.example.project.pharmacy.entity.Pharmacy
 import org.springframework.beans.factory.annotation.Autowired
 
+//@DataJpaTest
 class PharmacyRepositoryTest extends AbstractIntegrationContainerBaseTest {
 
-    @Autowired PharmacyRepository pharmacyRepository;
+    @Autowired
+    private PharmacyRepository pharmacyRepository;
 
-    def "PharmacyRepository save"() {
+     def "PharmacyRepository save"() {
         given:
         String address = "서울특별시 성복구 종암동"
         String name = "은혜 약국"
@@ -19,7 +21,8 @@ class PharmacyRepositoryTest extends AbstractIntegrationContainerBaseTest {
                 .pharmacyAddress(address)
                 .pharmacyName(name)
                 .latitude(latitude)
-                .longitude(longitude).build()
+                .longitude(longitude)
+                .build()
 
         when:
         def result = pharmacyRepository.save(pharmacy)
