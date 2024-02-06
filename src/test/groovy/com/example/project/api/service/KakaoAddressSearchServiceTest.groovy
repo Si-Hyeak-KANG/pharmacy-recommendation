@@ -1,7 +1,6 @@
 package com.example.project.api.service
 
 import com.example.project.AbstractIntegrationContainerBaseTest
-import com.example.project.api.dto.KakaoApiResponseDto
 import org.springframework.beans.factory.annotation.Autowired
 
 class KakaoAddressSearchServiceTest extends AbstractIntegrationContainerBaseTest {

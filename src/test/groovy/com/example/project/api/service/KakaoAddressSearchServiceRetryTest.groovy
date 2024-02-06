@@ -51,7 +51,7 @@ class KakaoAddressSearchServiceRetryTest extends AbstractIntegrationContainerBas
         def takeRequest = mockWebServer.takeRequest()
 
         then:
-        //2 * kakaoUriBuilderService.buildUriByAddressSearch(inputAddress) >> uri
+        2 * kakaoUriBuilderService.buildUriByAddressSearch(inputAddress) >> uri
         takeRequest.getMethod() == "GET"
         kakaoApiResult.getDocumentList().size() == 1
         kakaoApiResult.getMetaDto().totalCount == 1
@@ -71,7 +71,7 @@ class KakaoAddressSearchServiceRetryTest extends AbstractIntegrationContainerBas
         def result = kakaoAddressSearchService.requestAddressSearch(inputAddress)
 
         then:
-        //2 * kakaoUriBuilderService.buildUriByAddressSearch(inputAddress) >> uri
+        2 * kakaoUriBuilderService.buildUriByAddressSearch(inputAddress) >> uri
         result == null
     }
 }

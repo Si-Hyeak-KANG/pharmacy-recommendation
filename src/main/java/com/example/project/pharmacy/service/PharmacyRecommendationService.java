@@ -31,7 +31,7 @@ public class PharmacyRecommendationService {
         }
 
         DocumentDto documentDto = kakaoApiResponseDto.getDocumentList().get(0);
-        List<Direction> directions = directionService.buildDirectionList(documentDto);
+        List<Direction> directions = directionService.buildDirectionListByCategoryApi(documentDto);
         directionService.saveAll(directions);
     }
 }
