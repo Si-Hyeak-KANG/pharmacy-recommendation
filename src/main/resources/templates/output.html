@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments.html::header"></div>
+<body>
+<div>
+	<h2 class="h2-title">Pharmacy Recommendation Results</h2>
+</div>
+
+<table class="table table-hover">
+	<tr>
+		<th>약국명</th>
+		<th>약국 주소</th>
+		<th>거리</th>
+		<th>길안내 링크</th>
+		<th>로드뷰 링크</th>
+	</tr>
+
+	<tr th:each="event , index: ${outputFormList}">
+		<td th:text="${event.pharmacyName}"></td>
+		<td th:text="${event.pharmacyAddress}"></td>
+		<td th:text="${event.distance}"></td>
+		<td><a th:href="${event.directionUrl}"  th:text="길안내"></a></td>
+		<td><a th:href="${event.roadViewUrl}" th:text="로드뷰"></a></td>
+	</tr>
+</table>
+<div class="grid-image">
+	<img src="/images/kakao.png" alt="kakao" class="img-responsive img-rounded">
+</div>
+
+<div th:replace="fragments.html::footer"></div>
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+
+</body>
+</html>

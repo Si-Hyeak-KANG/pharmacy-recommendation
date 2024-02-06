@@ -3,15 +3,19 @@ package com.example.project.pharmacy.service;
 import com.example.project.api.dto.DocumentDto;
 import com.example.project.api.dto.KakaoApiResponseDto;
 import com.example.project.api.service.KakaoAddressSearchService;
+import com.example.project.direction.dto.OutputDto;
 import com.example.project.direction.entity.Direction;
 import com.example.project.direction.service.DirectionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -21,17 +25,43 @@ public class PharmacyRecommendationService {
     private final KakaoAddressSearchService kakaoAddressSearchService;
     private final DirectionService directionService;
 
-    public void recommendPharmacyList(String address) {
+    private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
+    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
+
+
+    public List<OutputDto> recommendPharmacyList(String address) {
 
         KakaoApiResponseDto kakaoApiResponseDto = kakaoAddressSearchService.requestAddressSearch(address);
 
         if(Objects.isNull(kakaoApiResponseDto) || CollectionUtils.isEmpty(kakaoApiResponseDto.getDocumentList())) {
             log.error("[PharmacyRecommendationService recommendPharmacyList fail] Input address: {}", address);
-            return;
+            return Collections.emptyList();
         }
 
         DocumentDto documentDto = kakaoApiResponseDto.getDocumentList().get(0);
         List<Direction> directions = directionService.buildDirectionListByCategoryApi(documentDto);
-        directionService.saveAll(directions);
+        return directionService.saveAll(directions)
+                .stream()
+                .map(this::convertToOutputDto)
+                .collect(Collectors.toList());
+    }
+
+    private OutputDto convertToOutputDto(Direction direction) {
+
+        String params = String.join(",", direction.getTargetPharmacyName(),
+                String.valueOf(direction.getTargetLatitude()),
+                String.valueOf(direction.getTargetLongitude()));
+
+        String result = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL + params).toUriString();
+
+        log.info("direction params: {}, url: {}",params, result);
+
+        return OutputDto.builder()
+                .pharmacyAddress(direction.getTargetAddress())
+                .pharmacyName(direction.getTargetPharmacyName())
+                .directionUrl(result)
+                .roadViewUrl(ROAD_VIEW_BASE_URL + direction.getTargetLatitude() + ", " + direction.getTargetLongitude())
+                .distance(String.format("%.2f km", direction.getDistance()))
+                .build();
     }
 }

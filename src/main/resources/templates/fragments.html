@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!--HEADER-->
+<head th:fragment="header">
+	<meta charset="UTF-8">
+	<title>약국 추천 서비스</title>
+
+	<!--부트스트랩 css 추가-->
+	<link rel="stylesheet" href="/static/css/lib/bootstrap.min.css">
+
+	<!--부트스트랩 js, jquery 추가-->
+	<script src="/static/js/lib/jquery.min.js"></script>
+	<script src="/static/js/lib/bootstrap.min.js"></script>
+	<style>
+		.container {
+			max-widht: 100%;
+		}
+
+		.grid-image{
+			display: flex;
+			justify-content: center;
+		}
+		img {
+			margin: 20px 0 20px;
+			width: 50%;
+			height: 450px;
+		}
+	</style>
+</head>
+
+<!--FOOTER-->
+<footer th:fragment="footer">
+	<nav>
+		<a href='https://wonyong-jang.github.io/' target='_blank'>Blog</a> |
+		<a href='https://github.com/wonyong-jang/' target='_blank'>Github</a>
+	</nav>
+	<p>
+		<span>Reference : https://developers.kakao.com</span><br>
+		<span>Source Code : https://github.com/WonYong-Jang/Pharmacy-Recommendation</span><br>
+		<span>Copyright 2022. WonYong-Jang. All Rights Reserved.</span>
+	</p>
+</footer>
+
+</html>
