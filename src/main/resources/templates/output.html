@@ -19,7 +19,7 @@
 		<td th:text="${event.pharmacyName}"></td>
 		<td th:text="${event.pharmacyAddress}"></td>
 		<td th:text="${event.distance}"></td>
-		<td><a th:href="${event.directionUrl}"  th:text="길안내"></a></td>
+		<td><a th:href="${event.directionUrl}"  th:text="${event.directionUrl}"></a></td>
 		<td><a th:href="${event.roadViewUrl}" th:text="로드뷰"></a></td>
 	</tr>
 </table>
